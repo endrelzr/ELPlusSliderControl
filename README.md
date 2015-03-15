@@ -36,7 +36,9 @@ Example:
 
 ## Screenshots
 
-
+![preview](https://raw.githubusercontent.com/endrelzr/ELPlusSliderControl/master/screenshots/ELPlusSliderControl_1.png)
+![preview](https://raw.githubusercontent.com/endrelzr/ELPlusSliderControl/master/screenshots/ELPlusSliderControl_2.png)
+![preview](https://raw.githubusercontent.com/endrelzr/ELPlusSliderControl/master/screenshots/ELPlusSliderControl_3.png)
 
 ## Contact
 
