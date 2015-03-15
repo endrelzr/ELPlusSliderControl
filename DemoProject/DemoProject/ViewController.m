@@ -22,7 +22,7 @@
     
     self.slider = [[ELPlusSliderControl alloc ] initWithFrame:CGRectMake(10, 70, self.view.frame.size.width - 20, 40)];
     self.slider.plusEnabled = YES;
-    self.slider.tintColor = [UIColor greenColor];
+    self.slider.tintColor = [UIColor colorWithRed:145.0/255.0 green:202.0/255.0 blue:98.0/255.0 alpha:1.0];;
     self.slider.backgroundColor = [UIColor whiteColor];
     self.slider.cornerRadius = 20;
     self.slider.plusSelectedOpacity = 0.1;

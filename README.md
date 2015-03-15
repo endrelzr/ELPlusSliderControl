@@ -8,6 +8,36 @@ Flat style two segment slider, with optional plus segment.
 * iOS 7.0 or higher
 * ARC
 
+
+##Installation
+
+Currently you can install it only manually by copying these two files to your project: ELPlusSliderControl.h and ELPlusSliderControl.m
+
+### Usage
+
+ In order to use ELPlusSliderControl, you can instantiate it programmatically. Once you have an instance, you can use the control properties to configure it.
+
+Example:
+
+```
+ 	self.slider = [[ELPlusSliderControl alloc ] initWithFrame:CGRectMake(10, 70, self.view.frame.size.width - 20, 40)];
+    self.slider.plusEnabled = YES;
+    self.slider.tintColor = [UIColor greenColor];;
+    self.slider.backgroundColor = [UIColor whiteColor];
+    self.slider.cornerRadius = 20;
+    self.slider.plusSelectedOpacity = 0.1;
+    self.slider.segmentOneImage = [UIImage imageNamed:...];
+    self.slider.segmentOneImageSelected = [UIImage imageNamed:...];
+    self.slider.segmentTwoImage = [UIImage imageNamed:...];
+    self.slider.segmentTwoImageSelected = [UIImage imageNamed:...];
+    [self.slider addTarget:self action:@selector(sliderEvent:) forControlEvents:UIControlEventAllEvents];
+
+```
+
+## Screenshots
+
+
+
 ## Contact
 
 Endre Lázár
