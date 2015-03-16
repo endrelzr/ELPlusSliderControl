@@ -86,8 +86,8 @@
     
     _animationTimingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
     
-    self.segmentOneText = @"SegmOne";
-    self.segmentTwoText = @"SegmTwo";
+    _segmentOneText = @"SegmOne";
+    _segmentTwoText = @"SegmTwo";
     
     self.textFont = [UIFont fontWithName:@"Helvetica" size:13.0];
     
@@ -186,11 +186,13 @@
     _segmentOneTextLayer.bounds = CGRectMake(0, 0, textOneSize.width , textOneSize.height + 2);
     _segmentOneTextLayer.font =  CGFontCreateWithFontName((CFStringRef)self.textFont.fontName);
     _segmentOneTextLayer.fontSize = self.textFont.pointSize;
+    _segmentOneTextLayer.string = _segmentOneText;
     
     _segmentTwoTextLayer.position = textTwoPosition;
     _segmentTwoTextLayer.bounds = CGRectMake(0, 0, textTwoSize.width , textTwoSize.height + 2);
     _segmentTwoTextLayer.font =  CGFontCreateWithFontName((CFStringRef)self.textFont.fontName);
     _segmentTwoTextLayer.fontSize = self.textFont.pointSize;
+    _segmentTwoTextLayer.string = _segmentTwoText;
     
     if (self.segmentOneImage) {
         _segmentOneImageLayer.contents = (id)([self.segmentOneImage CGImage]);
@@ -230,15 +232,18 @@
     _sliderLayer.fillColor = [_tintColor CGColor];
     _sliderLayer.strokeColor = [_tintColor CGColor];
     
+    _segmentOneTextLayer.foregroundColor = (self.sliderPosition == ELPlusSliderPositionOne) ? [self.selectedColor CGColor] : [self.tintColor CGColor];
+    _segmentTwoTextLayer.foregroundColor = (self.sliderPosition == ELPlusSliderPositionTwo) ? [self.selectedColor CGColor] : [self.tintColor CGColor];
     _segmentPlusTextLayer.foregroundColor = (self.sliderPosition == ELPlusSliderPositionPlus) ? [self.selectedColor CGColor] : [self.tintColor CGColor];
 }
 
 -(void)setSelectedColor:(UIColor *)selectedColor{
     _selectedColor = selectedColor;
-    _segmentOneTextLayer.foregroundColor = [self.selectedColor CGColor];
-    _segmentTwoTextLayer.foregroundColor = [self.selectedColor CGColor];
     
-    _segmentPlusTextLayer.foregroundColor = (self.sliderPosition == ELPlusSliderPositionPlus) ? [self.selectedColor CGColor] : [self.tintColor CGColor];
+    if (self.sliderPosition == ELPlusSliderPositionOne) _segmentOneTextLayer.foregroundColor = [self.selectedColor CGColor];
+    if (self.sliderPosition == ELPlusSliderPositionTwo) _segmentTwoTextLayer.foregroundColor = [self.selectedColor CGColor];
+    if (self.sliderPosition == ELPlusSliderPositionPlus) _segmentPlusTextLayer.foregroundColor = [self.selectedColor CGColor];
+    
 }
 
 -(void)setBackgroundColor:(UIColor *)backgroundColor{
@@ -284,6 +289,18 @@
     _segmentTwoImageSelectedLayer.contentsScale = self.layer.contentsScale;
     _segmentTwoImageSelectedLayer.backgroundColor = [[UIColor clearColor] CGColor];
     [self.layer addSublayer:_segmentTwoImageSelectedLayer];
+    
+    [self positionateTextAndImage];
+}
+
+-(void)setSegmentOneText:(NSString *)segmentOneText{
+    _segmentOneText = segmentOneText;
+    
+    [self positionateTextAndImage];
+}
+
+-(void)setSegmentTwoText:(NSString *)segmentTwoText{
+    _segmentTwoText = segmentTwoText;
     
     [self positionateTextAndImage];
 }
