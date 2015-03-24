@@ -36,7 +36,7 @@
     self.slider.backgroundColor = [UIColor whiteColor];
     self.slider.selectedColor = [UIColor whiteColor];
     
-    [self.slider addTarget:self action:@selector(sliderEvent:) forControlEvents:UIControlEventAllEvents];
+    [self.slider addTarget:self action:@selector(sliderEvent:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:self.slider];
     
     
@@ -51,6 +51,7 @@
 
 -(void) sliderEvent: (ELPlusSliderControl*) control{
     NSLog(@"Slider position: %f", self.slider.sliderPositionFraction );
+    NSLog(@"Slider sleects: %d", self.slider.sliderPosition);
 }
 
 -(void) buttonPressed{

@@ -421,15 +421,16 @@
     
     [CATransaction commit];
     
-    if (offset == 0.0) {
-        _sliderPosition = ELPlusSliderPositionOne;
-    } else if (offset == 1.0)
-        _sliderPosition = ELPlusSliderPositionTwo;
-    else if (offset == 0.5)
-        _sliderPosition = ELPlusSliderPositionPlus;
+    if (!self.tracking) {
+        if (offset == 0.0) {
+            _sliderPosition = ELPlusSliderPositionOne;
+        } else if (offset == 1.0)
+            _sliderPosition = ELPlusSliderPositionTwo;
+        else if (offset == 0.5)
+            _sliderPosition = ELPlusSliderPositionPlus;
+    }
     
-    
-    [self sendActionsForControlEvents:UIControlEventAllEvents];
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
     
 }
 
