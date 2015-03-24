@@ -33,8 +33,11 @@ typedef enum {
 
 @interface ELPlusSliderControl : UIControl
 
+/**
+ *  Behaviour
+ */
 @property (assign, readwrite, nonatomic) BOOL plusEnabled;
-@property (assign, readwrite, nonatomic) CGFloat plusSelectedOpacity;
+@property (assign, readwrite, nonatomic) ELPlusSliderPosition defaultSliderPosition;
 
 /**
  *  Drawing properties
@@ -47,6 +50,7 @@ typedef enum {
 @property (strong, readwrite, nonatomic) UIColor* selectedColor;
 @property (strong, readwrite, nonatomic) UIColor* tintColor;
 @property (strong, readwrite, nonatomic) UIColor* backgroundColor;
+@property (assign, readwrite, nonatomic) CGFloat plusSelectedOpacity;
 /**
  *  Text properties
  */

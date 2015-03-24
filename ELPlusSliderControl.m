@@ -74,6 +74,7 @@
 
 -(void) initControl{
     _plusEnabled = NO;
+    _defaultSliderPosition = ELPlusSliderPositionOne;
     
     _tintColor = [UIColor greenColor];
     _backgroundColor = [UIColor whiteColor];
@@ -361,7 +362,7 @@
     
     // Move slider to position one if on plus
     if (self.sliderPosition == ELPlusSliderPositionPlus) {
-        [self setPosition:ELPlusSliderPositionOne animated:YES];
+        [self setPosition:self.defaultSliderPosition animated:YES];
     }
 }
 
