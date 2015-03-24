@@ -419,8 +419,6 @@
         _segmentTwoImageSelectedLayer.opacity = offset;
     }
     
-    [self sendActionsForControlEvents:UIControlEventAllEvents];
-    
     [CATransaction commit];
     
     if (offset == 0.0) {
@@ -429,6 +427,9 @@
         _sliderPosition = ELPlusSliderPositionTwo;
     else if (offset == 0.5)
         _sliderPosition = ELPlusSliderPositionPlus;
+    
+    
+    [self sendActionsForControlEvents:UIControlEventAllEvents];
     
 }
 
