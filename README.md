@@ -45,7 +45,7 @@ Example:
 Endre Lázár
 
 - https://github.com/endrelzr
-- endre89@gmail.com
+- hello@endrelazar.com
 
 ## License
 
