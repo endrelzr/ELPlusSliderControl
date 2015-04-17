@@ -1,6 +1,6 @@
 # ELPlusSliderControl
 
-Flat style two segment slider, with optional plus segment. 
+Segmented control with slider for two segments and optional plus segment. 
 
 ## Requirements
 * Xcode 6 or higher

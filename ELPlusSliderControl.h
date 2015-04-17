@@ -36,7 +36,7 @@ typedef enum {
 /**
  *  Behaviour
  */
-@property (assign, readwrite, nonatomic) BOOL plusEnabled;
+@property (assign, readwrite, nonatomic) BOOL plusEnabled; 
 @property (assign, readwrite, nonatomic) ELPlusSliderPosition defaultSliderPosition;
 
 /**
