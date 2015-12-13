@@ -76,14 +76,16 @@
     _plusEnabled = NO;
     _defaultSliderPosition = ELPlusSliderPositionOne;
     
-    _tintColor = [UIColor greenColor];
-    _backgroundColor = [UIColor whiteColor];
-    _selectedColor = [UIColor whiteColor];
+    _backgroundColor = [UIColor greenColor];
+    _selectedBackgroundColor = [UIColor whiteColor];
+    _textColor = [UIColor whiteColor];
+    _selectedTextColor = [UIColor greenColor];
     _textToImagePosition = 5.0;
     _animationDuration = 0.25;
     _cornerRadius = 1;
     _sliderPosition = ELPlusSliderPositionOne;
-    _plusSelectedOpacity = 0.0;
+    _selectedPlusOpacity = 0.0;
+    _outerBorder = 3.0;
     
     _animationTimingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
     
@@ -104,16 +106,17 @@
     _frameLayer.bounds = self.bounds;
     _frameLayer.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
     _frameLayer.fillColor = [self.backgroundColor CGColor];
-    _frameLayer.strokeColor = [self.tintColor CGColor];
+    _frameLayer.strokeColor = [self.backgroundColor CGColor];
     _frameLayer.lineWidth = 1.0;
     _frameLayer.path = [[UIBezierPath bezierPathWithRoundedRect: _frameLayer.bounds cornerRadius: self.cornerRadius ] CGPath];
     [self.layer addSublayer:_frameLayer];
     
     _sliderLayer = [CAShapeLayer layer];
     _sliderLayer.contentsScale = self.layer.contentsScale;
-    _sliderLayer.fillColor = [self.tintColor CGColor];
-    _sliderLayer.strokeColor = [self.tintColor CGColor];
-    _sliderLayer.bounds = CGRectMake(0, 0, self.bounds.size.width / (2.0 + (_plusEnabled?1.0:0.0)), self.bounds.size.height);
+    _sliderLayer.fillColor = [self.selectedBackgroundColor CGColor];
+    _sliderLayer.strokeColor = [self.selectedBackgroundColor CGColor];
+    _sliderLayer.bounds = CGRectMake(self.outerBorder, self.outerBorder,
+                                     (self.bounds.size.width - 2 * self.outerBorder) / (2.0 + (_plusEnabled ? 1.0 : 0.0)), self.bounds.size.height - 2 * self.outerBorder);
     _sliderLayer.lineWidth = 1.0;
     _sliderLayer.position = CGPointMake(CGRectGetMinX(self.bounds) + _sliderLayer.bounds.size.width / 2.0, CGRectGetMidY(self.bounds));
     _sliderLayer.path = [[UIBezierPath bezierPathWithRoundedRect:_sliderLayer.bounds cornerRadius:self.cornerRadius] CGPath];
@@ -122,14 +125,14 @@
     _segmentOneTextLayer = [CATextLayer layer];
     _segmentOneTextLayer.contentsScale = self.layer.contentsScale;
     _segmentOneTextLayer.string = self.segmentOneText;
-    _segmentOneTextLayer.foregroundColor = [self.selectedColor CGColor];
+    _segmentOneTextLayer.foregroundColor = [self.textColor CGColor];
     _segmentOneTextLayer.alignmentMode = kCAAlignmentLeft;
     [self.layer addSublayer:_segmentOneTextLayer];
     
     _segmentTwoTextLayer = [CATextLayer layer];
     _segmentTwoTextLayer.contentsScale = self.layer.contentsScale;
     _segmentTwoTextLayer.string = self.segmentTwoText;
-    _segmentTwoTextLayer.foregroundColor = [self.selectedColor CGColor];
+    _segmentTwoTextLayer.foregroundColor = [self.textColor CGColor];
     _segmentTwoTextLayer.alignmentMode = kCAAlignmentLeft;
     [self.layer addSublayer:_segmentTwoTextLayer];
     
@@ -139,7 +142,7 @@
     [self.layer addSublayer: _segmentTwoImageLayer];
     
     _segmentPlusTextLayer = [CATextLayer layer];
-    _segmentPlusTextLayer.foregroundColor = [self.tintColor CGColor];
+    _segmentPlusTextLayer.foregroundColor = [self.textColor CGColor];
     _segmentPlusTextLayer.contentsScale = self.layer.contentsScale;
     _segmentPlusTextLayer.string = @"+";
     _segmentPlusTextLayer.alignmentMode = kCAAlignmentCenter;
@@ -170,17 +173,23 @@
     CGPoint imageTwoPosition;
     
     if (self.segmentOneImage){
-        imageOnePosition = CGPointMake((_sliderLayer.bounds.size.width - textOneSize.width - self.segmentOneImage.size.width - self.textToImagePosition) / 2.0 +  self.segmentOneImage.size.width / 2.0, _frameLayer.bounds.size.height / 2.0);
-        textOnePosition = CGPointMake((_sliderLayer.bounds.size.width - textOneSize.width - self.segmentOneImage.size.width - self.textToImagePosition) / 2.0 +  self.segmentOneImage.size.width + self.textToImagePosition + textOneSize.width / 2.0,  _frameLayer.bounds.size.height / 2.0);
+        imageOnePosition = CGPointMake((_sliderLayer.bounds.size.width - textOneSize.width - self.segmentOneImage.size.width - self.textToImagePosition) / 2.0 +  self.segmentOneImage.size.width / 2.0,
+                                       _frameLayer.bounds.size.height / 2.0);
+        textOnePosition = CGPointMake((_sliderLayer.bounds.size.width - textOneSize.width - self.segmentOneImage.size.width - self.textToImagePosition) / 2.0 +  self.segmentOneImage.size.width + self.textToImagePosition + textOneSize.width / 2.0,
+                                      _frameLayer.bounds.size.height / 2.0);
     } else {
-        textOnePosition = CGPointMake(_sliderLayer.bounds.size.width / 2.0, _frameLayer.bounds.size.height / 2.0);
+        textOnePosition = CGPointMake(_sliderLayer.bounds.size.width / 2.0,
+                                      _frameLayer.bounds.size.height / 2.0);
     }
     
     if (self.segmentTwoImage){
-        imageTwoPosition = CGPointMake( self.bounds.size.width - _sliderLayer.bounds.size.width + (_sliderLayer.bounds.size.width - textTwoSize.width - self.segmentOneImage.size.width - self.textToImagePosition) / 2.0 +  self.segmentOneImage.size.width / 2.0, _frameLayer.bounds.size.height / 2.0);
-        textTwoPosition = CGPointMake( self.bounds.size.width - _sliderLayer.bounds.size.width + (_sliderLayer.bounds.size.width - textTwoSize.width - self.segmentOneImage.size.width - self.textToImagePosition) / 2.0 +  self.segmentOneImage.size.width + self.textToImagePosition + textTwoSize.width / 2.0,  _frameLayer.bounds.size.height / 2.0);
+        imageTwoPosition = CGPointMake( self.bounds.size.width - _sliderLayer.bounds.size.width + (_sliderLayer.bounds.size.width - textTwoSize.width - self.segmentOneImage.size.width - self.textToImagePosition) / 2.0 +  self.segmentOneImage.size.width / 2.0,
+                                       _frameLayer.bounds.size.height / 2.0);
+        textTwoPosition = CGPointMake( self.bounds.size.width - _sliderLayer.bounds.size.width + (_sliderLayer.bounds.size.width - textTwoSize.width - self.segmentOneImage.size.width - self.textToImagePosition) / 2.0 +  self.segmentOneImage.size.width + self.textToImagePosition + textTwoSize.width / 2.0,
+                                      _frameLayer.bounds.size.height / 2.0);
     } else {
-        textTwoPosition = CGPointMake(self.bounds.size.width - _sliderLayer.bounds.size.width / 2.0, _frameLayer.bounds.size.height / 2.0);
+        textTwoPosition = CGPointMake(self.bounds.size.width - _sliderLayer.bounds.size.width / 2.0,
+                                      _frameLayer.bounds.size.height / 2.0);
     }
     
     _segmentOneTextLayer.position = textOnePosition;
@@ -227,30 +236,34 @@
 
 #pragma mark - Public setters
 
--(void)setTintColor:(UIColor *)tintColor{
-    _tintColor = tintColor;
-    _frameLayer.strokeColor = [_tintColor CGColor];
-    _sliderLayer.fillColor = [_tintColor CGColor];
-    _sliderLayer.strokeColor = [_tintColor CGColor];
-    
-    _segmentOneTextLayer.foregroundColor = (self.sliderPosition == ELPlusSliderPositionOne) ? [self.selectedColor CGColor] : [self.tintColor CGColor];
-    _segmentTwoTextLayer.foregroundColor = (self.sliderPosition == ELPlusSliderPositionTwo) ? [self.selectedColor CGColor] : [self.tintColor CGColor];
-    _segmentPlusTextLayer.foregroundColor = (self.sliderPosition == ELPlusSliderPositionPlus) ? [self.selectedColor CGColor] : [self.tintColor CGColor];
-}
-
--(void)setSelectedColor:(UIColor *)selectedColor{
-    _selectedColor = selectedColor;
-    
-    if (self.sliderPosition == ELPlusSliderPositionOne) _segmentOneTextLayer.foregroundColor = [self.selectedColor CGColor];
-    if (self.sliderPosition == ELPlusSliderPositionTwo) _segmentTwoTextLayer.foregroundColor = [self.selectedColor CGColor];
-    if (self.sliderPosition == ELPlusSliderPositionPlus) _segmentPlusTextLayer.foregroundColor = [self.selectedColor CGColor];
-    
-}
-
 -(void)setBackgroundColor:(UIColor *)backgroundColor{
     _backgroundColor = backgroundColor;
-    _frameLayer.fillColor = [backgroundColor CGColor];
-    self.layer.backgroundColor = [backgroundColor CGColor];
+    
+    _frameLayer.strokeColor = [_backgroundColor CGColor];
+    _frameLayer.fillColor = [_backgroundColor CGColor];
+    
+    [self setPositionForOffset:self.sliderPositionFraction animated:NO];
+}
+
+-(void)setSelectedBackgroundColor:(UIColor *)selectedBackgroundColor{
+    _selectedBackgroundColor = selectedBackgroundColor;
+    
+    _sliderLayer.strokeColor = [_selectedBackgroundColor CGColor];
+    _sliderLayer.fillColor = [_selectedBackgroundColor CGColor];
+    
+    [self setPositionForOffset:self.sliderPositionFraction animated:NO];
+}
+
+-(void)setTextColor:(UIColor *)textColor{
+    _textColor = textColor;
+    
+    [self setPositionForOffset:self.sliderPositionFraction animated:NO];
+}
+
+-(void)setSelectedTextColor:(UIColor *)selectedTextColor{
+    _selectedTextColor = selectedTextColor;
+    
+    [self setPositionForOffset:self.sliderPositionFraction animated:NO];
 }
 
 -(void)setSegmentOneImage:(UIImage *)segmentOneImage{
@@ -321,9 +334,11 @@
     _plusEnabled = plusEnabled;
     
     // Prepare for enable
-    _segmentPlusTextLayer.foregroundColor = [self.tintColor CGColor];
+    _segmentPlusTextLayer.foregroundColor = [self.textColor CGColor];
     CGFloat plusFrom = plusEnabled ? 0.00001 : 1.0;
     _segmentPlusTextLayer.transform = CATransform3DMakeScale(plusFrom, plusFrom, 1.0);
+    
+
     
     // COnfigure animation
     [CATransaction begin];
@@ -332,9 +347,10 @@
     [CATransaction setAnimationTimingFunction:_animationTimingFunction];
     
     // Animate slider
-    _sliderLayer.bounds = CGRectMake(0, 0, _frameLayer.bounds.size.width / (2.0 + ( _plusEnabled ? 1.0 : 0.0)), self.bounds.size.height);
+    _sliderLayer.bounds = CGRectMake(self.outerBorder, self.outerBorder,
+                                     (_frameLayer.bounds.size.width - 2 * self.outerBorder)/ (2.0 + ( _plusEnabled ? 1.0 : 0.0)), self.bounds.size.height - 2 * self.outerBorder);
     _sliderLayer.position = CGPointMake(CGRectGetMinX(self.bounds) + _sliderLayer.bounds.size.width / 2.0, CGRectGetMidY(self.bounds));
-    _sliderLayer.transform = CATransform3DMakeTranslation(self.sliderPositionFraction * _sliderLayer.bounds.size.width * ( _plusEnabled ? 2.0 : 1.0), 0, 0);
+    _sliderLayer.transform = CATransform3DMakeTranslation(self.sliderPositionFraction * _sliderLayer.bounds.size.width * ( _plusEnabled ? 2.0 : 1.0) + self.outerBorder, 0, 0);
     
     // Animate plus sign
     CGFloat plusTo = plusEnabled ? 1.0 : 0.00001;
@@ -387,34 +403,34 @@
 
 - (void) setPositionForOffset:(CGFloat) offset animated:(BOOL) animated{
     _sliderPositionFraction = offset;
-    
+
     [CATransaction begin];
     [CATransaction setAnimationDuration: animated? self.animationDuration : 0.0];
     [CATransaction setDisableActions:NO];
     [CATransaction setAnimationTimingFunction:_animationTimingFunction];
     
     if (self.plusEnabled){
-        _sliderLayer.transform = CATransform3DMakeTranslation(offset * _sliderLayer.bounds.size.width * 2, 0, 0);
+        _sliderLayer.transform = CATransform3DMakeTranslation(offset * _sliderLayer.bounds.size.width * 2 + self.outerBorder, 0, 0);
         
         CGFloat segmentOneColorOffset = (offset < 0.5) ? offset * 2.0 : 1.0;
         CGFloat segmentTwoColorOffset = (offset > 0.5) ? (1.0 - offset) * 2.0 : 1.0;
         CGFloat segmentPlusColorOffset = (offset < 0.5) ? 1.0 - segmentOneColorOffset : 1 - segmentTwoColorOffset;
         CGFloat backgroundColorOffset = (offset < 0.5) ? offset * 2.0 : (1.0 - offset) * 2 ;
         
-        _segmentOneTextLayer.foregroundColor = [self colorFromColor:self.selectedColor toColor:self.tintColor percent:segmentOneColorOffset].CGColor;
-        _segmentTwoTextLayer.foregroundColor = [self colorFromColor:self.selectedColor toColor:self.tintColor percent:segmentTwoColorOffset].CGColor;
+        _segmentOneTextLayer.foregroundColor = [self colorFromColor:self.selectedTextColor toColor:self.textColor percent:segmentOneColorOffset].CGColor;
+        _segmentTwoTextLayer.foregroundColor = [self colorFromColor:self.selectedTextColor toColor:self.textColor percent:segmentTwoColorOffset].CGColor;
         
-        _segmentPlusTextLayer.foregroundColor = [self colorFromColor:self.selectedColor toColor:self.tintColor percent:segmentPlusColorOffset].CGColor;
+        _segmentPlusTextLayer.foregroundColor = [self colorFromColor:self.selectedTextColor toColor:self.textColor percent:segmentPlusColorOffset].CGColor;
         
         _segmentOneImageSelectedLayer.opacity = 1 - segmentOneColorOffset;
         _segmentTwoImageSelectedLayer.opacity = 1 - segmentTwoColorOffset;
         
-        _frameLayer.fillColor = [[self colorFromColor:self.backgroundColor toColor:self.tintColor percent:backgroundColorOffset * self.plusSelectedOpacity] CGColor];
+        _frameLayer.fillColor = [[self colorFromColor:self.backgroundColor toColor:self.selectedBackgroundColor percent:backgroundColorOffset * self.selectedPlusOpacity] CGColor];
         
-    } else{
-        _sliderLayer.transform = CATransform3DMakeTranslation(offset * _sliderLayer.bounds.size.width, 0, 0);
-        _segmentOneTextLayer.foregroundColor = [self colorFromColor:self.selectedColor toColor:self.tintColor percent:offset].CGColor;
-        _segmentTwoTextLayer.foregroundColor = [self colorFromColor:self.selectedColor toColor:self.tintColor percent:1 - offset].CGColor;
+    } else {
+        _sliderLayer.transform = CATransform3DMakeTranslation(offset * _sliderLayer.bounds.size.width + self.outerBorder, 0, 0);
+        _segmentOneTextLayer.foregroundColor = [self colorFromColor:self.selectedTextColor toColor:self.textColor percent:offset].CGColor;
+        _segmentTwoTextLayer.foregroundColor = [self colorFromColor:self.selectedTextColor toColor:self.textColor percent:1 - offset].CGColor;
         
         _segmentOneImageSelectedLayer.opacity = 1.0 - offset;
         _segmentTwoImageSelectedLayer.opacity = offset;

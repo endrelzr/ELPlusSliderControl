@@ -42,15 +42,17 @@ typedef enum {
 /**
  *  Drawing properties
  */
+@property (assign, readwrite, nonatomic) CGFloat outerBorder;
 @property (assign, readwrite, nonatomic) CGFloat cornerRadius;
 @property (assign, readwrite, nonatomic) CGFloat textToImagePosition;
 /**
  *  Color properties
  */
-@property (strong, readwrite, nonatomic) UIColor* selectedColor;
-@property (strong, readwrite, nonatomic) UIColor* tintColor;
 @property (strong, readwrite, nonatomic) UIColor* backgroundColor;
-@property (assign, readwrite, nonatomic) CGFloat plusSelectedOpacity;
+@property (strong, readwrite, nonatomic) UIColor* selectedBackgroundColor;
+@property (strong, readwrite, nonatomic) UIColor* textColor;
+@property (strong, readwrite, nonatomic) UIColor* selectedTextColor;
+@property (assign, readwrite, nonatomic) CGFloat selectedPlusOpacity;
 /**
  *  Text properties
  */
