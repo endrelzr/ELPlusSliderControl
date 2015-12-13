@@ -1,13 +1,6 @@
 # ELPlusSliderControl
 
-Runkeeper style segmented control with slider for two segments and an optional plus segment, written in ObjC.  
-
-## Requirements
-* Xcode 6 or higher
-* Apple LLVM compiler
-* iOS 7.0 or higher
-* ARC
-
+Runkeeper style segmented control with slider for two segments and an optional plus segment, written in ObjC and compatible with iOS7+
 
 ##Installation
 
