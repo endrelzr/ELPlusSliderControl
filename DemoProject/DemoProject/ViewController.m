@@ -23,18 +23,19 @@
     self.slider = [[ELPlusSliderControl alloc ] initWithFrame:CGRectMake(10, 70, self.view.frame.size.width - 20, 40)];
     self.slider.plusEnabled = YES;
     self.slider.cornerRadius = 20;
-    self.slider.plusSelectedOpacity = 0.1;
-    self.slider.segmentOneImage = [UIImage imageNamed:@"map_g"];
-    self.slider.segmentOneImageSelected = [UIImage imageNamed:@"map_w"];
-    self.slider.segmentTwoImage = [UIImage imageNamed:@"list_g"];
-    self.slider.segmentTwoImageSelected = [UIImage imageNamed:@"list_w"];
+    self.slider.selectedPlusOpacity = 0.2;
+    self.slider.segmentOneImage = [UIImage imageNamed:@"map_w"];
+    self.slider.segmentOneImageSelected = [UIImage imageNamed:@"map_g"];
+    self.slider.segmentTwoImage = [UIImage imageNamed:@"list_w"];
+    self.slider.segmentTwoImageSelected = [UIImage imageNamed:@"list_g"];
     
     self.slider.segmentOneText = @"S1";
     self.slider.segmentTwoText = @"S2";
     
-    self.slider.tintColor = [UIColor colorWithRed:145.0/255.0 green:202.0/255.0 blue:98.0/255.0 alpha:1.0];;
-    self.slider.backgroundColor = [UIColor whiteColor];
-    self.slider.selectedColor = [UIColor whiteColor];
+    self.slider.backgroundColor = [UIColor colorWithRed:145.0/255.0 green:202.0/255.0 blue:98.0/255.0 alpha:1.0];
+    self.slider.selectedBackgroundColor = [UIColor whiteColor];
+    self.slider.textColor = [UIColor whiteColor];
+    self.slider.selectedTextColor = [UIColor colorWithRed:145.0/255.0 green:202.0/255.0 blue:98.0/255.0 alpha:1.0];
     
     [self.slider addTarget:self action:@selector(sliderEvent:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:self.slider];
@@ -51,7 +52,7 @@
 
 -(void) sliderEvent: (ELPlusSliderControl*) control{
     NSLog(@"Slider position: %f", self.slider.sliderPositionFraction );
-    NSLog(@"Slider sleects: %d", self.slider.sliderPosition);
+    NSLog(@"Slider selected: %d", self.slider.sliderPosition);
 }
 
 -(void) buttonPressed{
