@@ -1,6 +1,6 @@
 # ELPlusSliderControl
 
-Segmented control with slider for two segments and optional plus segment. 
+Runkeeper style segmented control with slider for two segments and an optional plus segment, written in ObjC.  
 
 ## Requirements
 * Xcode 6 or higher
@@ -20,17 +20,23 @@ Currently you can install it only manually by copying these two files to your pr
 Example:
 
 ```
- 	self.slider = [[ELPlusSliderControl alloc ] initWithFrame:CGRectMake(10, 70, self.view.frame.size.width - 20, 40)];
+    self.slider = [[ELPlusSliderControl alloc ] initWithFrame:CGRectMake(10, 70, self.view.frame.size.width - 20, 40)];
     self.slider.plusEnabled = YES;
-    self.slider.tintColor = [UIColor greenColor];;
-    self.slider.backgroundColor = [UIColor whiteColor];
     self.slider.cornerRadius = 20;
-    self.slider.plusSelectedOpacity = 0.1;
-    self.slider.segmentOneImage = [UIImage imageNamed:...];
-    self.slider.segmentOneImageSelected = [UIImage imageNamed:...];
-    self.slider.segmentTwoImage = [UIImage imageNamed:...];
-    self.slider.segmentTwoImageSelected = [UIImage imageNamed:...];
-    [self.slider addTarget:self action:@selector(sliderEvent:) forControlEvents:UIControlEventAllEvents];
+    self.slider.selectedPlusOpacity = 0.2;
+    self.slider.segmentOneImage = [UIImage imageNamed:@"map_w"];
+    self.slider.segmentOneImageSelected = [UIImage imageNamed:@"map_g"];
+    self.slider.segmentTwoImage = [UIImage imageNamed:@"list_w"];
+    self.slider.segmentTwoImageSelected = [UIImage imageNamed:@"list_g"];
+    self.slider.segmentOneText = @"S1";
+    self.slider.segmentTwoText = @"S2";
+    self.slider.backgroundColor = [UIColor colorWithRed:145.0/255.0 green:202.0/255.0 blue:98.0/255.0 alpha:1.0];
+    self.slider.selectedBackgroundColor = [UIColor whiteColor];
+    self.slider.textColor = [UIColor whiteColor];
+    self.slider.selectedTextColor = [UIColor colorWithRed:145.0/255.0 green:202.0/255.0 blue:98.0/255.0 alpha:1.0];
+    [self.slider addTarget:self action:@selector(sliderEvent:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:self.slider];
+
 
 ```
 
